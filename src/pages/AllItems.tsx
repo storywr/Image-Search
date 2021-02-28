@@ -22,8 +22,9 @@ import {
   ExternalLinkIcon,
 } from '@chakra-ui/icons'
 import Item from '../components/Item.tsx';
-import { Order } from '../types'
+import { Order, Item as ItemType } from '../types'
 import useItems from '../hooks/useItems'
+import useSave from '../hooks/useSave'
 
 const mockOrders = [
   { number: 5345636 },
@@ -34,17 +35,16 @@ const mockOrders = [
 const AllItems = () => {
   const [search, setSearch] = useState<string>('')
   const items = useItems({ search: search })
+  const { savedItems, removeItem, saveItem }: any = useSave()
 
-  console.log(items)
-  
   return (
-    <Box height='400px'>
+    <Box>
       <HStack
-        divider={<StackDivider height='400px' borderColor="gray.200" />}
+        divider={<StackDivider borderColor="gray.200" />}
       >
         <Box
-          mr='1rem'
-          w='400px'
+          mr='2rem'
+          w='450px'
         >
           <>
             <InputGroup mb='1rem'>
@@ -79,13 +79,23 @@ const AllItems = () => {
           >
             Search
           </Button>
-          <Item />
+          {items.data && items.data.hits && items.data.hits.map((item: ItemType) => (
+            <Item
+              key={item.id}
+              saved={savedItems.includes(item.id)}
+              saveItem={saveItem}
+              removeItem={removeItem}
+              id={item.id}
+              tags={item.tags}
+              webformatURL={item.webformatURL}
+            />
+          ))}
         </Box>
-        <Box mb='auto' ml='1rem'>
+        <Box mb='auto' ml='2rem'>
           <Heading mb='1.5rem' size='md'>Saved</Heading>
-          {mockOrders.map((order: Order) => (
+          {savedItems.map((itemId: string) => (
             <Link color='teal' mb='0.5rem' display='flex' >
-              <Text>#{order.number}</Text>
+              <Text>#{itemId}</Text>
               <ExternalLinkIcon m='auto 0.5rem' />
             </Link>
           ))}

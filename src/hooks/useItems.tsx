@@ -10,7 +10,7 @@ const useItems = ({ search }: Props) => {
   return useQuery('items', async () => {
     const { data } = await axios({
       method: 'GET',
-      url: `${api}&q=${search}&image_type=photo`,
+      url: `${api}&q=${search}&image_type=photo&per_page=10&min_width=250`
     })
     return data
   })

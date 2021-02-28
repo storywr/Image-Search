@@ -36,7 +36,7 @@ const Navbar = () => {
         <Button
           ml='1rem'
           variant='ghost'
-          onClick={() => history.replace(`/users`)}
+          onClick={() => history.replace(`/my-items`)}
         >
           My Items
         </Button> 

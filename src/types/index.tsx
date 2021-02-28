@@ -4,8 +4,9 @@ export interface Item {
   name: string
   likes: number
   favorites: number
+  tags: string
   webformatURL: string
-  tags: string[]
+  largeImageURL: string
 }
 
 export interface Order {

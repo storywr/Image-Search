@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Badge,
   Box,
@@ -6,12 +6,14 @@ import {
   SimpleGrid,
   Text,
   Flex,
-  Image
+  Image,
+  Tooltip
 } from '@chakra-ui/react'
 import {
   CheckIcon,
   StarIcon 
 } from '@chakra-ui/icons'
+import useSave from '../../hooks/useSave'
 
 const mockTags = [
   'kitten',
@@ -20,20 +22,39 @@ const mockTags = [
   'white'
 ]
 
-const Item = () => {
+interface Props {
+  id: string
+  tags: string
+  webformatURL: string
+  saved: any
+  saveItem: any
+  removeItem: any
+}
+
+const Item = ({ id, tags, webformatURL, saved, saveItem, removeItem }: Props) => {
   return (
-    <Box display='flex'>
-      <Box mr='1rem'>
-        <Image src='https://media.istockphoto.com/photos/a-bored-french-bulldog-lying-down-and-resting-on-sofa-looking-outside-picture-id1249480163?b=1&k=6&m=1249480163&s=170667a&w=0&h=HamYm0gKRDwP_1p04f3GLwD4IMXOVSchxMmr92RFHzw=' alt='dog' />
+    <Box
+      mb='2rem'
+      display='flex'
+    >
+      <Box
+        cursor='pointer'
+        _hover={{
+          boxShadow: '0 12px 18px -1px rgba(0, 0, 0, 0.2), 0 6px 12px -1px rgba(0, 0, 0, 0.12)'
+        }}
+        onClick={() => saved ? removeItem(id) : saveItem(id)}
+      >
+        <Tooltip label={saved ? 'Remove from Saved' : 'Save Image'} placement='right'>
+          <Image maxWidth={250} src={webformatURL} alt='dog' />
+        </Tooltip>
+        {saved && <Box align='center' bg='teal'>Saved</Box>}
       </Box>
-      <Box ml='auto' h='800px' display='block'>
+      <Box ml='2rem' display='block'>
         <SimpleGrid mb='auto' columns={2} spacing={3}>
-          {mockTags.map(tag => (
+          {tags.split(',').map(tag => (
             <Badge align='center' colorScheme='teal'>{tag}</Badge>
           ))}
         </SimpleGrid>
-        <Flex height='150px' mt='auto' display='flex'>
-        </Flex>
       </Box>
     </Box>
   )

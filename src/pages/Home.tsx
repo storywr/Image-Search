@@ -12,6 +12,7 @@ const Home = () => (
     <Flex ml='3rem'>
       <Switch>
         <Route exact path='/' component={AllItems} />
+        <Route exact path='/my-items' component={UserItems} />
       </Switch>
     </Flex>
   </Flex>
