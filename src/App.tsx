@@ -1,38 +1,36 @@
-import * as React from "react"
+import React, { useState, createContext } from 'react'
 import {
   ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
+  theme
 } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+import Home from './pages/Home'
+import { Item } from './types'
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
-  </ChakraProvider>
+const queryClient = new QueryClient()
+const UserContext = React.createContext({})
+
+export const App = () => {
+  const [items, setItems] = useState<Item[]>([])
+
+  const saveSearch = (targetItems: Item[]) => setItems(targetItems)
+
+  return (
+    <ChakraProvider theme={theme}>
+      <UserContext.Provider value={{ currentSearch: items, saveSearch }}>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen />
+          <Router>
+            <Switch>
+              <Route path='/'>
+                <Home />
+              </Route>
+            </Switch>
+          </Router>
+        </QueryClientProvider>
+      </UserContext.Provider>
+    </ChakraProvider>
 )
+}
