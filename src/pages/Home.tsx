@@ -4,7 +4,7 @@ import { Flex } from '@chakra-ui/react'
 
 import Navbar from '../components/Navbar'
 import AllItems from '../pages/AllItems'
-import Item from '../pages/Item'
+import ItemPage from './ItemPage'
 import UserItems from '../pages/UserItems'
 
 const Home = () => (
@@ -14,7 +14,7 @@ const Home = () => (
       <Switch>
         <Route exact path='/' component={AllItems} />
         <Route exact path='/my-items' component={UserItems} />
-        <Route exact path='/items/:id' component={Item} />
+        <Route exact path='/items/:id' component={ItemPage} />
       </Switch>
     </Flex>
   </Flex>
