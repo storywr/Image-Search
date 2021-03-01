@@ -24,6 +24,8 @@ const mockTags = [
 
 interface Props {
   id: string
+  likes: number
+  favorites: number
   tags: string
   webformatURL: string
   saved: any
@@ -31,7 +33,7 @@ interface Props {
   removeItem: any
 }
 
-const Item = ({ id, tags, webformatURL, saved, saveItem, removeItem }: Props) => {
+const Item = ({ id, tags, webformatURL, saved, saveItem, removeItem, likes, favorites }: Props) => {
   return (
     <Box
       mb='2rem'
@@ -49,13 +51,23 @@ const Item = ({ id, tags, webformatURL, saved, saveItem, removeItem }: Props) =>
         </Tooltip>
         {saved && <Box align='center' bg='teal'>Saved</Box>}
       </Box>
-      <Box ml='2rem' display='block'>
-        <SimpleGrid mb='auto' columns={2} spacing={3}>
+      <Flex flexDirection='column' justifyContent='space-between' ml='2rem'>
+        <SimpleGrid columns={2} spacing={3}>
           {tags.split(',').map(tag => (
             <Badge align='center' colorScheme='teal'>{tag}</Badge>
           ))}
         </SimpleGrid>
-      </Box>
+        <Flex align='center'>
+          <Flex align='center'>
+            {likes}
+            <CheckIcon ml='2' />
+          </Flex>
+          <Flex align='center' ml='4'>
+            {favorites}
+            <StarIcon ml='2' />
+          </Flex>
+        </Flex>
+      </Flex>
     </Box>
   )
 }

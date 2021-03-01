@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   Box,
   FormLabel,
@@ -21,34 +21,37 @@ import {
   SearchIcon,
   ExternalLinkIcon,
 } from '@chakra-ui/icons'
+import { Link as ReactRouterLink } from 'react-router-dom'
+
 import Item from '../components/Item.tsx';
 import { Order, Item as ItemType } from '../types'
 import useItems from '../hooks/useItems'
 import useSave from '../hooks/useSave'
-
-const mockOrders = [
-  { number: 5345636 },
-  { number: 4358795 },
-  { number: 2345624 },
-]
+import useDebouncedValue from '../hooks/useDebouncedValue'
 
 const AllItems = () => {
   const [search, setSearch] = useState<string>('')
-  const items = useItems({ search: search })
+  const [category, setCategory] = useState<string>('')
+  const debouncedCategory = useDebouncedValue(category, 250)
+  const debouncedSearch = useDebouncedValue(search, 250)
+  const items = useItems({ category, search })
   const { savedItems, removeItem, saveItem }: any = useSave()
+
+  useMemo(() => {
+    items.refetch()
+  }, [debouncedCategory, debouncedSearch])
 
   return (
     <Box>
       <HStack
-        divider={<StackDivider borderColor="gray.200" />}
+        divider={<StackDivider borderColor="gray.400" />}
       >
-        <Box
-          mr='2rem'
-          w='450px'
-        >
+        <Box mr='2rem'>
           <>
+            <FormLabel><SearchIcon /> Keyword</FormLabel>
             <InputGroup mb='1rem'>
               <Input
+                // maxWidth='400px'
                 name='title'
                 placeholder='Keyword...'
                 value={search}
@@ -66,19 +69,15 @@ const AllItems = () => {
               }
             </InputGroup>
           </>
+          <FormLabel>Category</FormLabel>
           <Select
-            placeholder='Category...'
-            mb='1rem'
-          >
-            <option value='test'>test</option>
-          </Select>
-          <Button
-            w='100%'
+            // maxWidth='400px'
+            placeholder='All'
             mb='2rem'
-            colorScheme='teal'
+            onChange={e => setCategory(e.target.value)}
           >
-            Search
-          </Button>
+            <option value='nature'>Nature</option>
+          </Select>
           {items.data && items.data.hits && items.data.hits.map((item: ItemType) => (
             <Item
               key={item.id}
@@ -88,13 +87,15 @@ const AllItems = () => {
               id={item.id}
               tags={item.tags}
               webformatURL={item.webformatURL}
+              likes={item.likes}
+              favorites={item.favorites}
             />
           ))}
         </Box>
         <Box mb='auto' ml='2rem'>
           <Heading mb='1.5rem' size='md'>Saved</Heading>
           {savedItems.map((itemId: string) => (
-            <Link color='teal' mb='0.5rem' display='flex' >
+            <Link as={ReactRouterLink} to={`/items/${itemId}`} color='teal' mb='0.5rem' display='flex' >
               <Text>#{itemId}</Text>
               <ExternalLinkIcon m='auto 0.5rem' />
             </Link>
