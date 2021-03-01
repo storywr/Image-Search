@@ -1,12 +1,13 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import useItem from '../hooks/useItem'
-import { Avatar, Box, Image, Flex } from '@chakra-ui/react';
+import { Avatar, Box, Image, Flex, Spinner } from '@chakra-ui/react';
 import { StarIcon, CheckIcon } from '@chakra-ui/icons'
+
+import useItem from '../hooks/useItem'
 
 const Item = () => {
   const { id }: any = useParams()
-  const { data: item, error, isFetching } = useItem(id)
+  const { data: item } = useItem(id)
 
   return (
     item ? (
@@ -18,7 +19,17 @@ const Item = () => {
       >
         <Image src={item.hits[0].webformatURL} alt='image' />
         <Flex align='center' p='6'>
-          <Flex fontWeight='semibold' align='center'><Avatar mr='3' name="user" src={item.hits[0].userImageURL} /> {item.hits[0].user}</Flex>
+          <Flex 
+            fontWeight='semibold' 
+            align='center'
+          >
+            <Avatar 
+              mr='3' 
+              name="user" 
+              src={item.hits[0].userImageURL}
+            />
+            {item.hits[0].user}
+          </Flex>
           <Flex ml='auto' align='center'>
             <Flex align='center'>
               {item.hits[0].likes}
@@ -31,7 +42,7 @@ const Item = () => {
           </Flex>
         </Flex>
       </Box>
-    ) : <>No image...</>
+    ) : <Spinner />
   )
 }
 

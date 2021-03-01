@@ -8,26 +8,23 @@ import {
   IconButton,
   Link,
   Select,
-  Button,
   HStack,
   Heading,
   Text,
   StackDivider
 } from '@chakra-ui/react'
 import { 
-  AddIcon,
   CloseIcon,
-  EmailIcon,
   SearchIcon,
   ExternalLinkIcon,
 } from '@chakra-ui/icons'
 import { Link as ReactRouterLink } from 'react-router-dom'
 
 import Item from '../components/Item.tsx';
-import { Order, Item as ItemType } from '../types'
+import useDebouncedValue from '../hooks/useDebouncedValue'
 import useItems from '../hooks/useItems'
 import useSave from '../hooks/useSave'
-import useDebouncedValue from '../hooks/useDebouncedValue'
+import { Item as ItemType } from '../types'
 
 const AllItems = () => {
   const [search, setSearch] = useState<string>('')
@@ -92,10 +89,24 @@ const AllItems = () => {
             />
           ))}
         </Box>
-        <Box mb='auto' ml='2rem'>
-          <Heading mb='1.5rem' size='md'>Saved</Heading>
+        <Box 
+          mb='auto' 
+          ml='2rem'
+        >
+          <Heading 
+            mb='1.5rem' 
+            size='md'
+          >
+            Saved
+          </Heading>
           {savedItems.map((itemId: string) => (
-            <Link as={ReactRouterLink} to={`/items/${itemId}`} color='teal' mb='0.5rem' display='flex' >
+            <Link
+              as={ReactRouterLink}
+              to={`/items/${itemId}`}
+              color='teal'
+              mb='0.5rem'
+              display='flex'
+            >
               <Text>#{itemId}</Text>
               <ExternalLinkIcon m='auto 0.5rem' />
             </Link>

@@ -1,6 +1,7 @@
 import React from 'react'
-import useSave from '../hooks/useSave'
 import { Box } from '@chakra-ui/react'
+
+import useSave from '../hooks/useSave'
 
 const UserItems = () => {
   const { savedItems, removeItem, saveItem }: any = useSave()

@@ -1,11 +1,11 @@
 import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { Flex } from '@chakra-ui/react'
 
 import Navbar from '../components/Navbar'
 import AllItems from '../pages/AllItems'
-import UserItems from '../pages/UserItems'
 import Item from '../pages/Item'
+import UserItems from '../pages/UserItems'
 
 const Home = () => (
   <Flex minH='100vh' flexDirection='column'>
