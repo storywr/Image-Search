@@ -25,18 +25,22 @@ import useDebouncedValue from '../hooks/useDebouncedValue'
 import useItems from '../hooks/useItems'
 import useSave from '../hooks/useSave'
 import { Item as ItemType } from '../types'
+import availableCategories from '../utils/categories'
 
 const AllItems = () => {
   const [search, setSearch] = useState<string>('')
   const [category, setCategory] = useState<string>('')
   const debouncedCategory = useDebouncedValue(category, 250)
   const debouncedSearch = useDebouncedValue(search, 250)
-  const items = useItems({ category, search })
+  const items = useItems({ category, search: search.trim() })
   const { savedItems, removeItem, saveItem }: any = useSave()
 
   useMemo(() => {
     items.refetch()
   }, [debouncedCategory, debouncedSearch])
+
+  const capitalize = ([firstLetter, ...restOfWord]: any) =>
+    firstLetter.toUpperCase() + restOfWord.join('')
 
   return (
     <Box>
@@ -48,7 +52,6 @@ const AllItems = () => {
             <FormLabel><SearchIcon /> Keyword</FormLabel>
             <InputGroup mb='1rem'>
               <Input
-                // maxWidth='400px'
                 name='title'
                 placeholder='Keyword...'
                 value={search}
@@ -68,12 +71,13 @@ const AllItems = () => {
           </>
           <FormLabel>Category</FormLabel>
           <Select
-            // maxWidth='400px'
             placeholder='All'
             mb='2rem'
             onChange={e => setCategory(e.target.value)}
           >
-            <option value='nature'>Nature</option>
+            {availableCategories.map((option: string) => (
+              <option key={option} value={option}>{capitalize(option)}</option>
+            ))}
           </Select>
           {items.data && items.data.hits && items.data.hits.map((item: ItemType) => (
             <Item
