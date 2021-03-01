@@ -38,7 +38,7 @@ const Item = ({ item, saved, saveItem, removeItem }: Props) => {
       >
         <Box>
           <Image maxWidth={250} src={webformatURL} alt='dog' />
-          {saved && <Box align='center' bg='teal'>Saved</Box>}
+          {saved && <Box align='center' color='white' bg='teal'>Saved</Box>}
         </Box>
         <Flex 
           p='3' 
