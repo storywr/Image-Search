@@ -1,5 +1,7 @@
 # Image Polo
 
+[Demo of Image Polo](https://image-polo.herokuapp.com/)
+
 ### Summary
 React App for image search using [Pixabay](https://pixabay.com/api/docs/)
 
