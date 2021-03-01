@@ -12,7 +12,7 @@ import {
   StarIcon 
 } from '@chakra-ui/icons'
 
-import { Item as ItemType } from '../../types';
+import { Item as ItemType } from '../types';
 
 interface Props {
   item: ItemType

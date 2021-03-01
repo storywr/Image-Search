@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/icons'
 import { Link as ReactRouterLink } from 'react-router-dom'
 
-import Item from '../components/Item.tsx';
+import Item from '../components/Item';
 import useDebouncedValue from '../hooks/useDebouncedValue'
 import useItems from '../hooks/useItems'
 import useSave from '../hooks/useSave'

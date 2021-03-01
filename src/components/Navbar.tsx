@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
 
-import ThemeSelector from '../../components/ThemeSelector'
+import ThemeSelector from './ThemeSelector'
 
 const Navbar = () => {
   const history = useHistory()

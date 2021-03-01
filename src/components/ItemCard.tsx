@@ -2,7 +2,7 @@ import React from 'react'
 import { Avatar, Box, Image, Flex } from '@chakra-ui/react';
 import { StarIcon, CheckIcon } from '@chakra-ui/icons'
 
-import { Item as ItemType } from '../../types'
+import { Item as ItemType } from '../types'
 
 interface Props {
   item: ItemType
