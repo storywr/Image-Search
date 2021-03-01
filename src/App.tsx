@@ -11,14 +11,14 @@ import Home from './pages/Home'
 const queryClient = new QueryClient()
 export const UserContext = React.createContext({
   savedItems: [],
-  saveItem: (id: string) => {},
-  removeItem: (id: string) => {}
+  saveItem: (item: any) => {},
+  removeItem: (item: any) => {}
 })
 
 export const App = () => {
   const [items, setItems] = useState<[]>([])
-  const saveItem = (id: string) => setItems((prevState: any) => prevState.concat([id]))
-  const removeItem = (id: string) => setItems((prevState: any) => prevState.filter((itemId: string) => itemId !== id))
+  const saveItem = (item: any) => setItems((prevState: any) => prevState.concat([item]))
+  const removeItem = (item: any) => setItems((prevState: any) => prevState.filter((savedItem: any) => savedItem.id !== item.id))
 
   return (
     <ChakraProvider theme={theme}>

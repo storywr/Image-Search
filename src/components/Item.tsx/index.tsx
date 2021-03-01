@@ -13,17 +13,14 @@ import {
 } from '@chakra-ui/icons'
 
 interface Props {
-  id: string
-  likes: number
-  favorites: number
-  tags: string
-  webformatURL: string
+  item: any
   saved: any
   saveItem: any
   removeItem: any
 }
 
-const Item = ({ id, tags, webformatURL, saved, saveItem, removeItem, likes, favorites }: Props) => {
+const Item = ({ item, saved, saveItem, removeItem }: Props) => {
+  const { id, tags, webformatURL, likes, favorites } = item
   return (
     <Tooltip label={saved ? 'Remove from Saved' : 'Save Image'} placement='right'>
       <Box
@@ -35,7 +32,7 @@ const Item = ({ id, tags, webformatURL, saved, saveItem, removeItem, likes, favo
         _hover={{
           boxShadow: '0 12px 18px -1px rgba(0, 0, 0, 0.2), 0 6px 12px -1px rgba(0, 0, 0, 0.12)'
         }}
-        onClick={() => saved ? removeItem(id) : saveItem(id)}
+        onClick={() => saved ? removeItem(item) : saveItem(item)}
       >
         <Box>
             <Image maxWidth={250} src={webformatURL} alt='dog' />
@@ -48,7 +45,7 @@ const Item = ({ id, tags, webformatURL, saved, saveItem, removeItem, likes, favo
           ml='3'
         >
           <SimpleGrid columns={2} spacing={3}>
-            {tags.split(',').map(tag => (
+            {tags.split(',').map((tag: string) => (
               <Badge align='center' colorScheme='teal'>{tag}</Badge>
             ))}
           </SimpleGrid>

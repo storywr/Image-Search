@@ -82,14 +82,10 @@ const AllItems = () => {
           {items.data && items.data.hits && items.data.hits.map((item: ItemType) => (
             <Item
               key={item.id}
-              saved={savedItems.includes(item.id)}
+              item={item}
+              saved={savedItems.some((savedItem: any) => savedItem.id === item.id)}
               saveItem={saveItem}
               removeItem={removeItem}
-              id={item.id}
-              tags={item.tags}
-              webformatURL={item.webformatURL}
-              likes={item.likes}
-              favorites={item.favorites}
             />
           ))}
         </Box>
@@ -103,18 +99,20 @@ const AllItems = () => {
           >
             Saved
           </Heading>
-          {savedItems.map((itemId: string) => (
+          {savedItems.map((item: any) => {
+            console.log(item)
+            return (
             <Link
               as={ReactRouterLink}
-              to={`/items/${itemId}`}
+              to={`/items/${item.id}`}
               color='teal'
               mb='0.5rem'
               display='flex'
             >
-              <Text>#{itemId}</Text>
+              <Text>#{item.id}</Text>
               <ExternalLinkIcon m='auto 0.5rem' />
             </Link>
-          ))}
+          )})}
         </Box>
       </HStack>
     </Box>
