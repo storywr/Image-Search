@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, ChangeEvent } from 'react'
 import {
   Box,
   FormLabel,
@@ -55,7 +55,7 @@ const AllItems = () => {
                 name='title'
                 placeholder='Keyword...'
                 value={search}
-                onChange={e => setSearch(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
               />
               {search &&
                 <InputRightElement>
@@ -73,7 +73,7 @@ const AllItems = () => {
           <Select
             placeholder='All'
             mb='2rem'
-            onChange={e => setCategory(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value)}
           >
             {availableCategories.map((option: string) => (
               <option key={option} value={option}>{capitalize(option)}</option>
@@ -83,7 +83,7 @@ const AllItems = () => {
             <Item
               key={item.id}
               item={item}
-              saved={savedItems.some((savedItem: any) => savedItem.id === item.id)}
+              saved={savedItems.some((savedItem: ItemType) => savedItem.id === item.id)}
               saveItem={saveItem}
               removeItem={removeItem}
             />
@@ -99,9 +99,7 @@ const AllItems = () => {
           >
             Saved
           </Heading>
-          {savedItems.map((item: any) => {
-            console.log(item)
-            return (
+          {savedItems.map((item: ItemType) => (
             <Link
               as={ReactRouterLink}
               to={`/items/${item.id}`}
@@ -112,7 +110,7 @@ const AllItems = () => {
               <Text>#{item.id}</Text>
               <ExternalLinkIcon m='auto 0.5rem' />
             </Link>
-          )})}
+          ))}
         </Box>
       </HStack>
     </Box>

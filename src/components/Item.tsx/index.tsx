@@ -12,15 +12,17 @@ import {
   StarIcon 
 } from '@chakra-ui/icons'
 
+import { Item as ItemType } from '../../types';
+
 interface Props {
-  item: any
-  saved: any
-  saveItem: any
-  removeItem: any
+  item: ItemType
+  saved: []
+  saveItem: (item: ItemType) => {}
+  removeItem: (item: ItemType) => {}
 }
 
 const Item = ({ item, saved, saveItem, removeItem }: Props) => {
-  const { id, tags, webformatURL, likes, favorites } = item
+  const { tags, webformatURL, likes, favorites } = item
   return (
     <Tooltip label={saved ? 'Remove from Saved' : 'Save Image'} placement='right'>
       <Box
@@ -35,7 +37,7 @@ const Item = ({ item, saved, saveItem, removeItem }: Props) => {
         onClick={() => saved ? removeItem(item) : saveItem(item)}
       >
         <Box>
-            <Image maxWidth={250} src={webformatURL} alt='dog' />
+          <Image maxWidth={250} src={webformatURL} alt='dog' />
           {saved && <Box align='center' bg='teal'>Saved</Box>}
         </Box>
         <Flex 

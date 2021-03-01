@@ -2,7 +2,13 @@ import React from 'react'
 import { Avatar, Box, Image, Flex } from '@chakra-ui/react';
 import { StarIcon, CheckIcon } from '@chakra-ui/icons'
 
-const Item = ({ item }: any) => (
+import { Item as ItemType } from '../../types'
+
+interface Props {
+  item: ItemType
+}
+
+const Item = ({ item }: Props) => (
   <Box
     maxW='md'
     borderWidth='1px'

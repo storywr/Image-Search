@@ -7,8 +7,6 @@ export interface Item {
   tags: string
   webformatURL: string
   largeImageURL: string
-}
-
-export interface Order {
-  number: number
+  userImageURL: string
+  user: string
 }
