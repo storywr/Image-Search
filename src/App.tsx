@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useReducer } from 'react'
 import {
   ChakraProvider,
   theme
@@ -18,23 +18,33 @@ export const UserContext = React.createContext({
   removeItem: (item: Item) => {}
 })
 
-export const App = () => {
-  const [items, setItems] = useState<[]>(JSON.parse(ls.get('items')) || [])
+const initialState = JSON.parse(ls.get('items')) || []
+
+const reducer = (state: Item[], action: any) => {
   const updateLocal = (newItems: Item[]) => ls.set('items', JSON.stringify(newItems))
-  const saveItem = (item: Item) => setItems((prevState: any) => {
-    const newState = prevState.concat([item])
-    updateLocal(newState)
-    return newState
-  })
-  const removeItem = (item: Item) => setItems((prevState: any) => {
-    const newState = prevState.filter((savedItem: Item) => savedItem.id !== item.id)
-    updateLocal(newState)
-    return newState 
-  })
+
+  switch (action.type) {
+    case 'add':
+      const sumItems = state.concat(action.item)
+      updateLocal(sumItems)
+      return sumItems
+    case 'remove':
+      const differenceItems = state.filter((savedItem: Item) => savedItem.id !== action.item.id)
+      updateLocal(differenceItems)
+      return differenceItems
+    default:
+      return state
+  }
+}
+
+export const App = () => {
+  const [savedItems, dispatch]: any = useReducer(reducer, initialState)
+  const saveItem = (item: Item) => dispatch({ type: 'add', item })
+  const removeItem = (item: Item) => dispatch({ type: 'remove', item })
 
   return (
     <ChakraProvider theme={theme}>
-      <UserContext.Provider value={{ savedItems: items, saveItem, removeItem }}>
+      <UserContext.Provider value={{ savedItems, saveItem, removeItem }}>
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen />
           <Router>
