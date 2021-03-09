@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 
 import Home from './pages/Home'
 import { Item } from './types';
+import ls from './utils/localstorage'
 
 const queryClient = new QueryClient()
 export const UserContext = React.createContext({
@@ -18,9 +19,18 @@ export const UserContext = React.createContext({
 })
 
 export const App = () => {
-  const [items, setItems] = useState<[]>([])
-  const saveItem = (item: Item) => setItems((prevState: any) => prevState.concat([item]))
-  const removeItem = (item: Item) => setItems((prevState: any) => prevState.filter((savedItem: Item) => savedItem.id !== item.id))
+  const [items, setItems] = useState<[]>(JSON.parse(ls.get('items')) || [])
+  const updateLocal = (newItems: Item[]) => ls.set('items', JSON.stringify(newItems))
+  const saveItem = (item: Item) => setItems((prevState: any) => {
+    const newState = prevState.concat([item])
+    updateLocal(newState)
+    return newState
+  })
+  const removeItem = (item: Item) => setItems((prevState: any) => {
+    const newState = prevState.filter((savedItem: Item) => savedItem.id !== item.id)
+    updateLocal(newState)
+    return newState 
+  })
 
   return (
     <ChakraProvider theme={theme}>
