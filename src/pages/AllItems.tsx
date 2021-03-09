@@ -11,12 +11,16 @@ import {
   HStack,
   Heading,
   Text,
-  StackDivider
+  StackDivider,
+  Button,
+  Flex,
+  Tooltip
 } from '@chakra-ui/react'
 import { 
   CloseIcon,
   SearchIcon,
   ExternalLinkIcon,
+  DeleteIcon,
 } from '@chakra-ui/icons'
 import { Link as ReactRouterLink } from 'react-router-dom'
 
@@ -33,7 +37,7 @@ const AllItems = () => {
   const debouncedCategory = useDebouncedValue(category, 250)
   const debouncedSearch = useDebouncedValue(search, 250)
   const items = useItems({ category, search: search.trim() })
-  const { savedItems, removeItem, saveItem }: any = useSave()
+  const { savedItems, removeItem, saveItem, clear }: any = useSave()
 
   useMemo(() => {
     items.refetch()
@@ -93,12 +97,29 @@ const AllItems = () => {
           mb='auto' 
           ml='2rem'
         >
-          <Heading 
-            mb='1.5rem' 
-            size='md'
-          >
-            Saved
-          </Heading>
+          <Flex alignItems='baseline'>
+            <Heading 
+              mb='6'
+              mr='2'
+              size='md'
+            >
+              Saved
+            </Heading>
+            {savedItems.length > 0 && (
+              <Tooltip
+                label='clear'
+                placement='right-start'
+              >
+                <IconButton
+                  variant='ghost'
+                  aria-label='clear'
+                  size='md'
+                  onClick={() => clear()}
+                  icon={<DeleteIcon />}
+                />
+              </Tooltip>
+            )}
+          </Flex>
           {savedItems.map((item: ItemType) => (
             <Link
               as={ReactRouterLink}

@@ -15,7 +15,8 @@ const queryClient = new QueryClient()
 export const UserContext = React.createContext({
   savedItems: [],
   saveItem: (item: Item) => {},
-  removeItem: (item: Item) => {}
+  removeItem: (item: Item) => {},
+  clear: () => {}
 })
 
 const initialState = JSON.parse(ls.get('items')) || []
@@ -32,6 +33,9 @@ const reducer = (state: Item[], action: { type: string, item: Item}) => {
       const differenceItems = state.filter((savedItem: Item) => savedItem.id !== action.item.id)
       updateLocal(differenceItems)
       return differenceItems
+    case 'clear':
+      ls.remove('items')
+      return []
     default:
       return state
   }
@@ -41,10 +45,11 @@ export const App = () => {
   const [savedItems, dispatch]: any = useReducer(reducer, initialState)
   const saveItem = (item: Item) => dispatch({ type: 'add', item })
   const removeItem = (item: Item) => dispatch({ type: 'remove', item })
+  const clear = () => dispatch({ type: 'clear' })
 
   return (
     <ChakraProvider theme={theme}>
-      <UserContext.Provider value={{ savedItems, saveItem, removeItem }}>
+      <UserContext.Provider value={{ savedItems, saveItem, removeItem, clear }}>
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen />
           <Router>
