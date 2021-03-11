@@ -1,4 +1,4 @@
-import React, { useMemo, useState, ChangeEvent } from 'react'
+import React, { useEffect, useState, ChangeEvent } from 'react'
 import {
   Box,
   FormLabel,
@@ -38,7 +38,7 @@ const AllItems = () => {
   const items = useItems({ category, search: search.trim() })
   const { savedItems, removeItem, saveItem, clear }: any = useSave()
 
-  useMemo(() => {
+  useEffect(() => {
     items.refetch()
   }, [debouncedCategory, debouncedSearch])
 
