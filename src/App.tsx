@@ -21,7 +21,7 @@ export const UserContext = React.createContext({
 
 const initialState = JSON.parse(ls.get('items')) || []
 
-const reducer = (state: Item[], action: { type: string, item: Item}) => {
+const reducer = (state: Item[], action: { type: string, item: Item }) => {
   const updateLocal = (newItems: Item[]) => ls.set('items', JSON.stringify(newItems))
 
   switch (action.type) {
