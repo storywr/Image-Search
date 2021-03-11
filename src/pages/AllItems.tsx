@@ -12,7 +12,6 @@ import {
   Heading,
   Text,
   StackDivider,
-  Button,
   Flex,
   Tooltip
 } from '@chakra-ui/react'
