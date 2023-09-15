@@ -38,7 +38,7 @@ const Item = ({ item, saved, saveItem, removeItem }: Props) => {
       >
         <Box>
           <Image maxWidth={250} src={webformatURL} alt='dog' />
-          {saved && <Box align='center' color='white' bg='teal'>Saved</Box>}
+          {saved && <Box color='white' bg='teal'>Saved</Box>}
         </Box>
         <Flex 
           p='3' 
@@ -48,7 +48,7 @@ const Item = ({ item, saved, saveItem, removeItem }: Props) => {
         >
           <SimpleGrid columns={2} spacing={3}>
             {tags.split(',').map((tag: string) => (
-              <Badge align='center' colorScheme='teal'>{tag}</Badge>
+              <Badge colorScheme='teal'>{tag}</Badge>
             ))}
           </SimpleGrid>
           <Flex align='center'>
