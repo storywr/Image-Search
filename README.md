@@ -1,4 +1,4 @@
-# Image Polo
+# Image Search
 
 [Demo of Image Polo](https://image-polo.herokuapp.com/)
 
